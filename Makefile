@@ -23,6 +23,10 @@ build:
 	@mkdir -p $(OBJ_DIR) $(LIB_DIR)  # Ensure the object and library directories exist
 
 $(LIB_TARGET): $(LIB_OBJECTS)
+	@echo "Building library..."
+	@echo "LIB_TARGET = $(LIB_TARGET)"
+	@echo "LIB_OBJECTS = $(LIB_OBJECTS)"
+	@mkdir -p $(LIB_DIR)
 	ar rcs $@ $(LIB_OBJECTS)
 
 # Generic rule for compiling C++ files to objects
