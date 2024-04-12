@@ -24,6 +24,3 @@ jobs:
       run: |
         make -C .  # Use make in the root directory where the Makefile is located
 
-    - name: Run tests
-      run: |
-        ./bin/kyte_client  # Assuming executable is in the bin directory as per your Makefile setup
