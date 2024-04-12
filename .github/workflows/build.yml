@@ -1,0 +1,25 @@
+name: C++ Build Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build Kyte C++ Library
+    runs-on: ubuntu-latest  # You can specify other runners like windows-latest or macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install libcurl4-openssl-dev libssl-dev -y  # Ensure all necessary libraries are installed
+
+    - name: Build project
+      run: |
+        make -C .  # Use make in the root directory where the Makefile is located
+
+    - name: Run tests
+      run: |
+        ./bin/kyte_client  # Assuming executable is in the bin directory as per your Makefile setup
