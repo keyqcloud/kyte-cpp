@@ -7,33 +7,31 @@ LDFLAGS = -lcurl -lssl -lcrypto
 SRC_DIR = src
 INCLUDE_DIR = include
 OBJ_DIR = obj
-BIN_DIR = bin
+LIB_DIR = lib  # Define the library directory
 
-# Find all CPP files in SRC_DIR
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
-# Replace .cpp from SOURCES with .o and prepend OBJ_DIR
-OBJECTS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
+# Library target
+LIB_TARGET = $(LIB_DIR)/libkyte.a
 
-# Target executable
-TARGET = $(BIN_DIR)/kyte_client
+# Source files for the library
+LIB_SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+LIB_OBJECTS = $(LIB_SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-all: build $(TARGET)
+# Default target
+all: build $(LIB_TARGET)
 
 build:
-	@mkdir -p $(BIN_DIR)
-	@mkdir -p $(OBJ_DIR)
+    @mkdir -p $(OBJ_DIR) $(LIB_DIR)  # Ensure the object and library directories exist
 
-# Link the target with all objects files
-$(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+$(LIB_TARGET): $(LIB_OBJECTS)
+    ar rcs $@ $(LIB_OBJECTS)
 
-# Compile each source file to an object
+# Generic rule for compiling C++ files to objects
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+    $(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Cleanup
+# Clean up
 clean:
-	@rm -rf $(OBJ_DIR) $(BIN_DIR)
+    rm -f $(OBJ_DIR)/*.o $(LIB_TARGET)
+    @echo "Cleanup complete."
 
-# Phony targets
-.PHONY: all build clean
+.PHONY: all clean build
