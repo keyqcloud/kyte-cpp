@@ -7,7 +7,7 @@ LDFLAGS = -lcurl -lssl -lcrypto
 SRC_DIR = src
 INCLUDE_DIR = include
 OBJ_DIR = obj
-LIB_DIR = lib  # Define the library directory
+LIB_DIR = lib
 
 # Library target
 LIB_TARGET = $(LIB_DIR)/libkyte.a
