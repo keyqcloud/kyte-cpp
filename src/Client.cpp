@@ -77,10 +77,12 @@ namespace kyte {
         std::string readBuffer;
         if (curl) {
             struct curl_slist *headers = NULL;
-            headers = curl_slist_append(headers, ("Content-Type: application/json").c_str());
-            headers = curl_slist_append(headers, ("Accept: application/json").c_str());
-            headers = curl_slist_append(headers, ("x-kyte-signature: " + signature).c_str());
-            headers = curl_slist_append(headers, ("x-kyte-identity: " + identity).c_str());
+            std::string signatureHeader = "x-kyte-signature: " + signature;
+            std::string identityHeader = "x-kyte-identity: " + identity;
+            headers = curl_slist_append(headers, "Content-Type: application/json");
+            headers = curl_slist_append(headers, "Accept: application/json");
+            headers = curl_slist_append(headers, signatureHeader.c_str());
+            headers = curl_slist_append(headers, identityHeader.c_str());
             if (!kyte_app_id.empty()) {
                 headers = curl_slist_append(headers, ("x-kyte-appid: " + kyte_app_id).c_str());
             }
