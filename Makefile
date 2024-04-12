@@ -9,6 +9,11 @@ INCLUDE_DIR = include
 OBJ_DIR = obj
 LIB_DIR = lib
 
+# Installation directories
+PREFIX = /usr/local
+INSTALL_LIB_DIR = $(PREFIX)/lib
+INSTALL_INCLUDE_DIR = $(PREFIX)/include/kyte
+
 # Library target
 LIB_TARGET = $(LIB_DIR)/libkyte.a
 
@@ -35,4 +40,13 @@ clean:
 	rm -f $(OBJ_DIR)/*.o $(LIB_TARGET)
 	@echo "Cleanup complete."
 
-.PHONY: all clean build
+# Install the library and headers
+install:
+	@echo "Installing library..."
+	@mkdir -p $(INSTALL_LIB_DIR)
+	@mkdir -p $(INSTALL_INCLUDE_DIR)
+	@cp $(LIB_TARGET) $(INSTALL_LIB_DIR)
+	@cp $(INCLUDE_DIR)/kyte/*.hpp $(INSTALL_INCLUDE_DIR)
+	@echo "Installation complete."
+
+.PHONY: all clean build install
