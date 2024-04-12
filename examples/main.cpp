@@ -1,5 +1,5 @@
 // main.cpp
-#include "../include/kyte/Client.hpp"
+#include "Client.hpp"
 #include <iostream>
 
 int main() {

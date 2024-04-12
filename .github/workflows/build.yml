@@ -1,14 +1,14 @@
 name: C++ Build Workflow
 
 on:
-    push:
-      branches: [ "main" ]
-    pull_request:
-      branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
-    name: Build Kyte C++ Library
+    name: Build and Test Kyte C++ Library
     runs-on: ubuntu-latest  # You can specify other runners like windows-latest or macos-latest
 
     steps:
@@ -18,9 +18,18 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install libcurl4-openssl-dev libssl-dev -y  # Ensure all necessary libraries are installed
+        sudo apt-get install libcurl4-openssl-dev libssl-dev build-essential -y  # Ensure all necessary libraries are installed
 
-    - name: Build project
+    - name: Build and Install Library
       run: |
-        make -C .  # Use make in the root directory where the Makefile is located
+        make -C .  # Build the library
+        sudo make install  # Install the library
 
+    - name: Build Example Program
+      run: |
+        make -C examples/  # Build the example program using the installed library
+
+    # - name: Run Example Program
+    #   run: |
+    #     ./examples/my_app  # Run the example application
+    #   continue-on-error: false  # This makes the workflow fail if the application does not return 0
