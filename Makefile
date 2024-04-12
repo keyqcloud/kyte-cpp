@@ -20,18 +20,18 @@ LIB_OBJECTS = $(LIB_SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 all: build $(LIB_TARGET)
 
 build:
-    @mkdir -p $(OBJ_DIR) $(LIB_DIR)  # Ensure the object and library directories exist
+	@mkdir -p $(OBJ_DIR) $(LIB_DIR)  # Ensure the object and library directories exist
 
 $(LIB_TARGET): $(LIB_OBJECTS)
-    ar rcs $@ $(LIB_OBJECTS)
+	ar rcs $@ $(LIB_OBJECTS)
 
 # Generic rule for compiling C++ files to objects
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-    $(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Clean up
 clean:
-    rm -f $(OBJ_DIR)/*.o $(LIB_TARGET)
-    @echo "Cleanup complete."
+	rm -f $(OBJ_DIR)/*.o $(LIB_TARGET)
+	@echo "Cleanup complete."
 
 .PHONY: all clean build
