@@ -46,7 +46,7 @@ install:
 	@mkdir -p $(INSTALL_LIB_DIR)
 	@mkdir -p $(INSTALL_INCLUDE_DIR)
 	@cp $(LIB_TARGET) $(INSTALL_LIB_DIR)
-	@cp $(INCLUDE_DIR)/kyte/*.hpp $(INSTALL_INCLUDE_DIR)
+	@cp $(INCLUDE_DIR)/*.hpp $(INSTALL_INCLUDE_DIR)
 	@echo "Installation complete."
 
 .PHONY: all clean build install
